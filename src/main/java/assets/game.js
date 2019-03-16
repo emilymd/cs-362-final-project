@@ -32,8 +32,11 @@ function markHits(board, elementId, surrenderText) {
             className = "hit";
         else if (attack.result === "SUNK"){
             var occupy;
-            numShipsSunk++;
-            if(numShipsSunk == 1){
+
+            //adding numShipsSunk here, shouldn't be because it can lead to early sonar pulse
+            //numShipsSunk++;
+
+            if(numShipsSunk >= 1){
                 document.getElementById("laserActivationCode").classList.remove("laserhidden");
                 document.getElementById("laserCodeEntry").classList.remove("laserhidden");
             }
@@ -236,6 +239,18 @@ function place(size) {
 function initGame() {
     makeGrid(document.getElementById("opponent"), false);
     makeGrid(document.getElementById("player"), true);
+    //maybe try getting ship elements sunk here?? then changing num ships sunk here & not above?
+
+    document.getElementById("player").attacks.forEach((attack) => {
+        let className;
+        if (attack.result === "SUNK"){
+
+            //try adding numShipsSunk here
+            numShipsSunk++;
+            }
+        });
+
+
     document.getElementById("run_Sonar").addEventListener("click", function(e){
             sonarIsChecked=true;
     });
