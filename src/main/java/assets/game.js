@@ -33,6 +33,9 @@ function markHits(board, elementId, surrenderText) {
         else if (attack.result === "SUNK"){
             var occupy;
 
+            //Original placement for numShipsSunk - was allowing either board to have a placed ship which would
+            //activate sonar pulse too early
+
             //adding numShipsSunk here, shouldn't be because it can lead to early sonar pulse
             //numShipsSunk++;
 
@@ -135,6 +138,7 @@ function cellClick() {
     } else {
 
         if (sonarIsChecked){
+            //numShipsSunk now being changed below in game init, not sure if this is actually what we want
             if(numShipsSunk < 1 || numSonarUsed >= 2){
                 alert("Sorry, you can't do that! \nAt least one Enemy Ship must be sunk and \nyou may only use Sonar Pulse twice per game!");
             }
@@ -241,18 +245,28 @@ function initGame() {
     makeGrid(document.getElementById("player"), true);
     //maybe try getting ship elements sunk here?? then changing num ships sunk here & not above?
 
+    //get all attacks on the player board? or on the opponent board? may need to use
+    //document.getElementById("opponent").attacks.forEach((attack) => {
+
+    //going to try first with player board
     document.getElementById("player").attacks.forEach((attack) => {
         let className;
+        //check if any attacks are sunk, if yes increment the number of sunk ships
+        //no cap needed on sunk ships, as soon as 1 has been sunk then sonar will be activated so no need to worry
+        //about whether or not ships are counted twice
         if (attack.result === "SUNK"){
 
             //try adding numShipsSunk here
+            //Intellij requires payment to test javascript so we
+            //Will need to test manually if we can get game working...
+            console.log("adding ship to sunk count!");
             numShipsSunk++;
             }
         });
 
 
     document.getElementById("run_Sonar").addEventListener("click", function(e){
-            sonarIsChecked=true;
+            sonarIsChecked=true; //numShipsSunk set globally, so both need to be good to activate sonar
     });
     document.getElementById("laserCodeEntrySubmitButton").addEventListener("click", function(e){
             var textEntryBox = document.getElementById("laserText");
