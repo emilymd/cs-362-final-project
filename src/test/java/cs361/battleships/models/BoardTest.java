@@ -127,6 +127,8 @@ public class BoardTest {
 //
 //    }
 
+    //want to add more sonar tests to see if I can mimic some JS testing
+    //but I dont have $$ to upgrade intellij so I can't test in here...
     @Test
     public void testSonarIsOccupiedTrue(){
         board.placeShip(new Minesweeper(), 1, 'A', true);
@@ -138,6 +140,7 @@ public class BoardTest {
         assertTrue(board.sonarIsInBounds(4, 'B'));
         assertFalse(board.sonarIsInBounds(15, 'X'));
     }
+
     @Test
     public void testSonarPulse(){
         board.placeShip(new Battleship(), 4, 'D', false);
